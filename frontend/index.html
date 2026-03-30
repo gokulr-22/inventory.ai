@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SmartStock - Enterprise Inventory Intelligence Platform. AI-powered forecasting, real-time analytics, and enterprise-grade security for inventory management.">
+    <meta name="theme-color" content="#0f172a">
+    <title>SmartStock — Enterprise Inventory Intelligence Platform</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Theme toggle button -->
+    <div class="theme-toggle-container" id="themeToggleContainer">
+        <button class="theme-toggle-btn" id="themeToggle" title="Toggle Dark/Light Mode" aria-label="Toggle theme">
+            <i class="fas fa-sun"></i>
+            <i class="fas fa-moon"></i>
+        </button>
+        <span class="theme-label" id="themeLabel">Light Mode</span>
+    </div>
+
+    <!-- Premium animated background with bg.jpg -->
+    <div class="animated-bg">
+        <div class="bg-image-layer"></div>
+        <canvas id="particleCanvas" class="particle-canvas"></canvas>
+        <div class="blur-blob blob-1"></div>
+        <div class="blur-blob blob-2"></div>
+        <div class="blur-blob blob-3"></div>
+        <div class="blur-blob blob-4"></div>
+    </div>
+
+    <!-- Loading overlay -->
+    <div class="loading-overlay" id="loadingOverlay" aria-label="Loading">
+        <div class="premium-spinner">
+            <div class="spinner-orbit">
+                <div class="spinner-ring"></div>
+                <div class="spinner-ring ring-2"></div>
+                <div class="spinner-ring ring-3"></div>
+                <div class="spinner-core"></div>
+            </div>
+            <div class="spinner-text">SmartStock</div>
+            <div class="spinner-subtext">Initializing Intelligence Engine...</div>
+        </div>
+    </div>
+
+    <!-- Notification toast -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Main container -->
+    <div class="auth-container">
+        <!-- Left side - Info section -->
+        <div class="auth-info">
+            <div class="info-content">
+                <div class="logo-section">
+                    <div class="logo-icon">
+                        <i class="fas fa-cube"></i>
+                        <div class="logo-pulse"></div>
+                    </div>
+                    <div class="logo-text">
+                        <h1 class="brand-name">SmartStock</h1>
+                        <span class="brand-version">v2.0 Enterprise</span>
+                    </div>
+                </div>
+                
+                <p class="brand-tagline">Enterprise Inventory Intelligence Platform</p>
+                <p class="brand-description">Harness the power of ensemble AI to predict demand, optimize stock levels, and drive revenue growth — all in real time.</p>
+                
+                <div class="trust-badges">
+                    <div class="badge" id="badgeIso">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>ISO 27001</span>
+                    </div>
+                    <div class="badge" id="badgeSoc">
+                        <i class="fas fa-lock-open"></i>
+                        <span>SOC 2 Type II</span>
+                    </div>
+                    <div class="badge" id="badgeUptime">
+                        <i class="fas fa-server"></i>
+                        <span>99.99% Uptime</span>
+                    </div>
+                </div>
+                
+                <div class="features-list">
+                    <div class="feature-item" id="featureAi">
+                        <div class="feature-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h3>AI-Powered Forecasting</h3>
+                            <p>Advanced ML algorithms for accurate demand prediction</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item" id="featureAnalytics">
+                        <div class="feature-icon">
+                            <i class="fas fa-tachometer-alt"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h3>Real-Time Analytics</h3>
+                            <p>Live inventory monitoring & instant insights</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item" id="featureSecurity">
+                        <div class="feature-icon">
+                            <i class="fas fa-user-shield"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h3>Enterprise Security</h3>
+                            <p>End-to-end encryption & compliance ready</p>
+                        </div>
+                    </div>
+
+                    <div class="feature-item" id="featureScale">
+                        <div class="feature-icon">
+                            <i class="fas fa-cube"></i>
+                        </div>
+                        <div class="feature-text">
+                            <h3>Scalable Infrastructure</h3>
+                            <p>Handles millions of transactions daily</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clients-strip">
+                    <span class="clients-label">Trusted by 2,400+ enterprises worldwide</span>
+                    <div class="clients-dots">
+                        <span class="dot active"></span>
+                        <span class="dot"></span>
+                        <span class="dot"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right side - Login form -->
+        <div class="auth-form-wrapper">
+            <div class="auth-form">
+                <div class="form-header">
+                    <div class="form-header-badge">PREMIUM</div>
+                    <h2>Welcome Back</h2>
+                    <p>Access your enterprise inventory dashboard</p>
+                </div>
+
+                <!-- Form tabs for premium feel -->
+                <div class="form-tabs">
+                    <button class="tab-btn active" data-tab="login" id="tabLogin">Business Login</button>
+                    <button class="tab-btn" data-tab="sso" id="tabSso">Single Sign-On</button>
+                </div>
+
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <!-- Email input with validation -->
+                    <div class="form-group">
+                        <label for="email" class="form-label">Business Email</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope"></i>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                class="form-input" 
+                                placeholder="enterprise@company.com"
+                                required
+                                autocomplete="email"
+                            >
+                            <span class="input-status" id="emailStatus"></span>
+                            <span class="input-error" id="emailError"></span>
+                        </div>
+                    </div>
+
+                    <!-- Password input with strength indicator -->
+                    <div class="form-group">
+                        <div class="password-header">
+                            <label for="password" class="form-label">Password</label>
+                            <a href="#" class="forgot-link" id="forgotPassword">
+                                <i class="fas fa-question-circle"></i> Forgot password?
+                            </a>
+                        </div>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock"></i>
+                            <input 
+                                type="password" 
+                                id="password" 
+                                class="form-input" 
+                                placeholder="••••••••"
+                                required
+                                autocomplete="current-password"
+                            >
+                            <button type="button" class="toggle-password" onclick="togglePassword()" aria-label="Toggle password visibility">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <span class="input-error" id="passwordError"></span>
+                        </div>
+                        <div class="password-strength" id="passwordStrength">
+                            <div class="strength-bar"></div>
+                            <span class="strength-text"></span>
+                        </div>
+                    </div>
+
+                    <!-- 2FA Option -->
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label" for="enable2FA">
+                            <input type="checkbox" id="enable2FA" name="enable2fa">
+                            <span class="checkbox-custom"></span>
+                            <span class="checkbox-text">
+                                <span>Enable Two-Factor Authentication</span>
+                                <small>Recommended for enterprise security</small>
+                            </span>
+                        </label>
+                    </div>
+
+                    <!-- Remember me -->
+                    <div class="form-group checkbox-group">
+                        <label class="checkbox-label" for="remember">
+                            <input type="checkbox" id="remember" name="remember">
+                            <span class="checkbox-custom"></span>
+                            Keep me signed in on this device
+                        </label>
+                    </div>
+
+                    <!-- Login button with premium state -->
+                    <button type="submit" class="btn-login" id="loginBtn">
+                        <span class="btn-text">Sign In to Dashboard</span>
+                        <i class="fas fa-arrow-right"></i>
+                        <span class="btn-loading hidden">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </span>
+                    </button>
+                </form>
+
+                <!-- Divider -->
+                <div class="divider">
+                    <span>Or continue with</span>
+                </div>
+
+                <!-- Premium social login -->
+                <div class="social-login">
+                    <button class="social-btn google-btn" title="Login with Google Enterprise" id="googleLoginBtn">
+                        <i class="fab fa-google"></i>
+                        <span>Google</span>
+                    </button>
+                    <button class="social-btn microsoft-btn" title="Login with Microsoft" id="microsoftLoginBtn">
+                        <i class="fab fa-microsoft"></i>
+                        <span>Azure AD</span>
+                    </button>
+                </div>
+
+                <!-- Security features -->
+                <div class="security-info">
+                    <div class="security-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>256-bit Encryption</span>
+                    </div>
+                    <div class="security-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>GDPR Compliant</span>
+                    </div>
+                    <div class="security-item">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Zero-Knowledge</span>
+                    </div>
+                </div>
+
+                <!-- Sign up link -->
+                <p class="signup-prompt">
+                    New to SmartStock? <a href="#" class="signup-link" id="requestDemo">Request demo</a>
+                </p>
+
+                <!-- Footer with live status -->
+                <div class="form-footer">
+                    <span class="status-indicator"></span> All systems operational
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== PARTICLE CANVAS ====================
+        (function initParticles() {
+            const canvas = document.getElementById('particleCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            let animationId;
+
+            function resize() {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            }
+            resize();
+            window.addEventListener('resize', resize);
+
+            class Particle {
+                constructor() {
+                    this.reset();
+                }
+                reset() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 2 + 0.5;
+                    this.speedX = (Math.random() - 0.5) * 0.4;
+                    this.speedY = (Math.random() - 0.5) * 0.4;
+                    this.opacity = Math.random() * 0.4 + 0.1;
+                    this.pulse = Math.random() * Math.PI * 2;
+                }
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    this.pulse += 0.02;
+                    this.opacity = 0.15 + Math.sin(this.pulse) * 0.1;
+                    if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                    if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+                }
+                draw() {
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(56, 189, 248, ${this.opacity})`;
+                    ctx.fill();
+                }
+            }
+
+            const count = Math.min(80, Math.floor((canvas.width * canvas.height) / 15000));
+            for (let i = 0; i < count; i++) particles.push(new Particle());
+
+            function drawLines() {
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 150) {
+                            ctx.beginPath();
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.strokeStyle = `rgba(56, 189, 248, ${0.06 * (1 - dist / 150)})`;
+                            ctx.lineWidth = 0.5;
+                            ctx.stroke();
+                        }
+                    }
+                }
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => { p.update(); p.draw(); });
+                drawLines();
+                animationId = requestAnimationFrame(animate);
+            }
+            animate();
+        })();
+
+        // ==================== APP INIT ====================
+        window.addEventListener('load', () => {
+            const overlay = document.getElementById('loadingOverlay');
+            overlay.classList.add('fade-out');
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 800);
+        });
+
+        // Form tabs functionality
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Password visibility toggle
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleBtn = document.querySelector('.toggle-password i');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleBtn.classList.remove('fa-eye');
+                toggleBtn.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleBtn.classList.remove('fa-eye-slash');
+                toggleBtn.classList.add('fa-eye');
+            }
+        }
+
+        // Password strength indicator
+        document.getElementById('password').addEventListener('input', function() {
+            const password = this.value;
+            const strength = calculatePasswordStrength(password);
+            updateStrengthIndicator(strength);
+        });
+
+        function calculatePasswordStrength(password) {
+            let strength = 0;
+            if (password.length >= 8) strength++;
+            if (password.length >= 12) strength++;
+            if (/[a-z]/.test(password) && /[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^a-zA-Z0-9]/.test(password)) strength++;
+            return strength;
+        }
+
+        function updateStrengthIndicator(strength) {
+            const strengthEl = document.getElementById('passwordStrength');
+            const bar = strengthEl.querySelector('.strength-bar');
+            const text = strengthEl.querySelector('.strength-text');
+            
+            const levels = ['', 'Weak', 'Fair', 'Good', 'Strong', 'Very Strong'];
+            const colors = ['', '#ef4444', '#f97316', '#eab308', '#22c55e', '#10b981'];
+            
+            bar.style.width = (strength * 20) + '%';
+            bar.style.background = colors[strength];
+            text.textContent = levels[strength];
+            text.style.color = colors[strength];
+        }
+
+        // Email validation with live feedback
+        document.getElementById('email').addEventListener('input', function() {
+            const email = this.value;
+            const status = document.getElementById('emailStatus');
+            
+            if (email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                status.innerHTML = '<i class="fas fa-check-circle"></i>';
+                status.style.color = '#10b981';
+            } else if (email) {
+                status.innerHTML = '<i class="fas fa-times-circle"></i>';
+                status.style.color = '#ef4444';
+            } else {
+                status.innerHTML = '';
+            }
+        });
+
+        // Main login handler with premium validation
+        function handleLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const enable2FA = document.getElementById('enable2FA').checked;
+            
+            // Reset errors
+            document.getElementById('emailError').textContent = '';
+            document.getElementById('passwordError').textContent = '';
+            
+            let isValid = true;
+            
+            // Validate email
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                document.getElementById('emailError').textContent = 'Please enter a valid business email';
+                isValid = false;
+            }
+            
+            // Validate password
+            if (!password || password.length < 6) {
+                document.getElementById('passwordError').textContent = 'Password must be at least 6 characters';
+                isValid = false;
+            }
+            
+            if (isValid) {
+                // Add loading state
+                const btn = event.target.querySelector('.btn-login');
+                const btnText = btn.querySelector('.btn-text');
+                const btnLoading = btn.querySelector('.btn-loading');
+                
+                btn.classList.add('loading');
+                btn.disabled = true;
+                btnText.classList.add('hidden');
+                btnLoading.classList.remove('hidden');
+                
+                // Show toast notification
+                showToast('Authenticating...', 'info');
+                
+                // Simulate authentication delay
+                setTimeout(() => {
+                    if (enable2FA) {
+                        showToast('2FA Code sent to your email', 'success');
+                        // In a real app, show 2FA prompt here
+                    }
+                    // Redirect to dashboard
+                    window.location.href = 'dashboard.html';
+                }, 1200);
+            }
+        }
+
+        // Toast notification system
+        function showToast(message, type = 'info') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                info: 'fa-info-circle',
+                warning: 'fa-exclamation-triangle'
+            };
+            
+            toast.className = `toast toast-${type}`;
+            toast.innerHTML = `
+                <i class="fas ${icons[type]}"></i>
+                <span>${message}</span>
+            `;
+            
+            container.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 10);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Add input focus effects
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('focus', function() {
+                this.closest('.input-wrapper').classList.add('focused');
+            });
+            
+            input.addEventListener('blur', function() {
+                this.closest('.input-wrapper').classList.remove('focused');
+            });
+        });
+
+        // Premium keyboard interactions
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && document.activeElement.closest('.form-input')) {
+                const form = document.getElementById('loginForm');
+                if (form) form.dispatchEvent(new Event('submit'));
+            }
+        });
+
+        // ==================== THEME TOGGLE FUNCTIONALITY ====================
+        const THEMES = ['dark', 'light', 'aurora', 'cyber'];
+        const THEME_CONFIG = {
+            dark:   { label: 'Dark Mode',   icon: 'fa-moon',       class: null },
+            light:  { label: 'Light Mode',  icon: 'fa-sun',        class: 'light-mode' },
+            aurora: { label: 'Aurora Mode',  icon: 'fa-star',       class: 'aurora-mode' },
+            cyber:  { label: 'Cyber Mode',   icon: 'fa-bolt',       class: 'cyber-mode' }
+        };
+
+        // Initialize theme from localStorage
+        function initializeTheme() {
+            const savedTheme = localStorage.getItem('smartstock-theme') || 'dark';
+            applyTheme(savedTheme);
+        }
+
+        // Apply theme to the entire page
+        function applyTheme(theme) {
+            const html = document.documentElement;
+            const themeLabel = document.getElementById('themeLabel');
+            const toggleBtn = document.getElementById('themeToggle');
+
+            // Remove all theme classes
+            Object.values(THEME_CONFIG).forEach(cfg => {
+                if (cfg.class) html.classList.remove(cfg.class);
+            });
+
+            // Apply new theme class
+            const config = THEME_CONFIG[theme];
+            if (config.class) html.classList.add(config.class);
+
+            // Update label
+            themeLabel.textContent = config.label;
+
+            // Update toggle icon
+            toggleBtn.innerHTML = `<i class="fas ${config.icon}"></i>`;
+
+            localStorage.setItem('smartstock-theme', theme);
+        }
+
+        // Handle theme toggle button clicks — cycle through themes
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            const currentTheme = localStorage.getItem('smartstock-theme') || 'dark';
+            const currentIndex = THEMES.indexOf(currentTheme);
+            const nextIndex = (currentIndex + 1) % THEMES.length;
+            const nextTheme = THEMES[nextIndex];
+            applyTheme(nextTheme);
+            
+            // Add a subtle animation effect
+            const btn = document.getElementById('themeToggle');
+            btn.style.transform = 'scale(0.9) rotate(15deg)';
+            setTimeout(() => {
+                btn.style.transform = 'scale(1) rotate(0deg)';
+            }, 300);
+        });
+
+        // Allow keyboard shortcut: Ctrl+Shift+T to toggle theme
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.shiftKey && e.key === 'T') {
+                e.preventDefault();
+                document.getElementById('themeToggle').click();
+            }
+        });
+
+        // Initialize theme on page load
+        initializeTheme();
+
+        // ==================== INTERSECTION OBSERVER ANIMATIONS ====================
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -40px 0px' };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-in');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-item, .badge, .security-item').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
